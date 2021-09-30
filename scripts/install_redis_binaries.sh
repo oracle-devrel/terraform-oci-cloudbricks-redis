@@ -26,7 +26,7 @@ Wants=network-online.target
 [Service]
 User=redis
 Group=redis
-ExecStart=/usr/local/bin/redis-server /etc/redis.conf
+ExecStart=/usr/local/bin/redis-server /etc/redis/redis.conf
 ExecStop=/usr/local/bin/redis-cli shutdown
 
 Restart=always

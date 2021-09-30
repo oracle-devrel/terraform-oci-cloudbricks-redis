@@ -18,7 +18,6 @@ data "template_file" "redis_setup_master_sh" {
 
   vars = {
     redis_master_ip = oci_core_instance.redis_master.private_ip
-    redis_password  = var.redis_password
   }
 }
 
@@ -28,12 +27,10 @@ data "template_file" "redis_setup_replicas_sh" {
   template   = file("scripts/redis_setup_replicas.sh")
 
   vars = {
-    redis_master_ip = oci_core_instance.redis_master.private_ip
+    redis_master_ip  = oci_core_instance.redis_master.private_ip
     redis_replica_ip = oci_core_instance.redis_replica[count.index].private_ip
-    redis_password  = var.redis_password
   }
 }
-
 
 resource "null_resource" "master_install_redis_binaries" {
   depends_on = [oci_core_instance.redis_master,
@@ -141,14 +138,7 @@ resource "null_resource" "replica_install_redis_binaries" {
 
 
 resource "null_resource" "redis_setup_master" {
-  depends_on = [oci_core_instance.redis_master,
-    null_resource.provisioning_disk_redis_master,
-    null_resource.partition_disk_redis_master,
-    null_resource.pvcreate_exec_redis_master,
-    null_resource.vgcreate_exec_redis_master,
-    null_resource.format_disk_exec_redis_master,
-    null_resource.mount_disk_exec_redis_master
-  ]
+  depends_on = [null_resource.master_install_redis_binaries]
 
   provisioner "remote-exec" {
     connection {
@@ -193,13 +183,8 @@ resource "null_resource" "redis_setup_master" {
 
 resource "null_resource" "redis_setup_replicas" {
   count = var.redis_replica_count
-  depends_on = [oci_core_instance.redis_replica,
-    null_resource.provisioning_disk_redis_replica,
-    null_resource.partition_disk_redis_replica,
-    null_resource.pvcreate_exec_redis_replica,
-    null_resource.vgcreate_exec_redis_replica,
-    null_resource.format_disk_exec_redis_replica,
-    null_resource.mount_disk_exec_redis_replica
+  depends_on = [null_resource.redis_setup_master,
+    null_resource.replica_install_redis_binaries
   ]
 
   provisioner "remote-exec" {
@@ -241,3 +226,97 @@ resource "null_resource" "redis_setup_replicas" {
     ]
   }
 }
+
+
+resource "null_resource" "sentinel_setup_master" {
+  depends_on = [null_resource.redis_setup_master,
+    null_resource.redis_setup_replicas
+  ]
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_master.private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    inline = [
+      "sudo rm -rf ~/sentinel_setup.sh"
+    ]
+  }
+
+  provisioner "file" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_master.private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    source      = "scripts/sentinel_setup.sh"
+    destination = "~/sentinel_setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_master.private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    inline = [
+      "chmod +x ~/sentinel_setup.sh",
+      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${var.redis_replica_count}"
+    ]
+  }
+}
+
+
+resource "null_resource" "sentinel_setup_replicas" {
+  count = var.redis_replica_count
+  depends_on = [null_resource.redis_setup_master,
+    null_resource.redis_setup_replicas
+  ]
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_replica[count.index].private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    inline = [
+      "sudo rm -rf ~/sentinel_setup.sh"
+    ]
+  }
+
+  provisioner "file" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_replica[count.index].private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    source      = "scripts/sentinel_setup.sh"
+    destination = "~/sentinel_setup.sh"
+  }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = "opc"
+      host        = oci_core_instance.redis_replica[count.index].private_ip
+      private_key = file(var.ssh_private_key)
+    }
+
+    inline = [
+      "chmod +x ~/sentinel_setup.sh",
+      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${var.redis_replica_count}"
+    ]
+  }
+}
+

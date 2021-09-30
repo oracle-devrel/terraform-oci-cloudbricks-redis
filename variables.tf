@@ -153,11 +153,11 @@ variable "replica_backup_policy_level" {
 }
 
 variable "redis_version" {
-  
+
 }
 
 variable "redis_password" {
-  
+
 }
 
 
