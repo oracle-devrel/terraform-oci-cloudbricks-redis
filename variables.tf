@@ -34,23 +34,23 @@ variable "base_compute_image_ocid" {
 }
 
 variable "redis_master_name" {
-  
+
 }
 
 variable "redis_master_shape" {
-  
+
 }
 
 variable "redis_master_ad" {
-  
+
 }
 
 variable "redis_master_fd" {
-  
+
 }
 
 variable "redis_master_is_flex_shape" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -63,27 +63,27 @@ variable "redis_master_memory_in_gb" {
 }
 
 variable "redis_replica_name" {
-  
+
 }
 
 variable "redis_replica_count" {
-  
+
 }
 
 variable "redis_replica_shape" {
-  
+
 }
 
 variable "redis_replica_ad_list" {
-  
+
 }
 
 variable "redis_replica_fd_list" {
-  
+
 }
 
 variable "redis_replica_is_flex_shape" {
-  type = bool
+  type    = bool
   default = false
 }
 
@@ -122,6 +122,42 @@ variable "private_network_subnet_name" {
 variable "compute_nsg_name" {
   description = "Name of the NSG associated to the computes"
   default     = ""
+}
+
+variable "instance_backup_policy_level" {
+
+}
+
+variable "master_disk_size_in_gb" {
+
+}
+
+variable "master_disk_vpus_per_gb" {
+
+}
+
+variable "master_backup_policy_level" {
+
+}
+
+variable "replica_disk_size_in_gb" {
+
+}
+
+variable "replica_disk_vpus_per_gb" {
+
+}
+
+variable "replica_backup_policy_level" {
+
+}
+
+variable "redis_version" {
+  
+}
+
+variable "redis_password" {
+  
 }
 
 

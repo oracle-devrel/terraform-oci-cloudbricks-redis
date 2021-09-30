@@ -89,3 +89,18 @@ resource "oci_core_instance" "redis_replica" {
     ssh_authorized_keys = file(var.ssh_public_key)
   }
 }
+
+
+resource "oci_core_volume_backup_policy_assignment" "backup_policy_assignment_redis_master" {
+  depends_on = [oci_core_instance.redis_master]
+  asset_id   = oci_core_instance.redis_master.boot_volume_id
+  policy_id  = local.instance_backup_policy_id
+}
+
+
+resource "oci_core_volume_backup_policy_assignment" "backup_policy_assignment_redis_replica" {
+  count      = var.redis_replica_count
+  depends_on = [oci_core_instance.redis_replica]
+  asset_id   = oci_core_instance.redis_replica[count.index].boot_volume_id
+  policy_id  = local.instance_backup_policy_id
+}

@@ -53,6 +53,28 @@ data "oci_core_network_security_groups" "NSG" {
   }
 }
 
+/********** Backup Policy Accessors **********/
+data "oci_core_volume_backup_policies" "INSTANCEBACKUPPOLICY" {
+  filter {
+    name   = "display_name"
+    values = [var.instance_backup_policy_level]
+  }
+}
+
+data "oci_core_volume_backup_policies" "MASTERBACKUPPOLICY" {
+  filter {
+    name   = "display_name"
+    values = [var.master_backup_policy_level]
+  }
+}
+
+data "oci_core_volume_backup_policies" "REPLICABACKUPPOLICY" {
+  filter {
+    name   = "display_name"
+    values = [var.replica_backup_policy_level]
+  }
+}
+
 
 locals {
 
@@ -66,7 +88,21 @@ locals {
   # VCN OCID Local Accessor
   vcn_id = lookup(data.oci_core_vcns.VCN.virtual_networks[0], "id")
 
+  # Backup Policy Accessors
+  instance_backup_policy_id = data.oci_core_volume_backup_policies.INSTANCEBACKUPPOLICY.volume_backup_policies[0].id
+
+  master_backup_policy_id = data.oci_core_volume_backup_policies.MASTERBACKUPPOLICY.volume_backup_policies[0].id
+
+  replica_backup_policy_id = data.oci_core_volume_backup_policies.REPLICABACKUPPOLICY.volume_backup_policies[0].id
+
   # NSG OCID Local Accessor
   nsg_id = length(data.oci_core_network_security_groups.NSG.network_security_groups) > 0 ? lookup(data.oci_core_network_security_groups.NSG.network_security_groups[0], "id") : ""
+
+  # Command aliases for format and mounting iscsi disks
+  iscsiadm = "sudo iscsiadm"
+  fdisk    = "(echo n; echo p; echo '1'; echo ''; echo ''; echo 't';echo '8e'; echo w) | sudo /sbin/fdisk "
+  pvcreate = "sudo /sbin/pvcreate"
+  vgcreate = "sudo /sbin/vgcreate"
+  mkfs_xfs = "sudo /sbin/mkfs.xfs"
 
 }

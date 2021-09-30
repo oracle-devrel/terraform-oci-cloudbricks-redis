@@ -1,8 +1,4 @@
 #!/bin/bash
-set -x
-
-REDIS_CONFIG_FILE=/etc/redis.conf
-SENTINEL_CONFIG_FILE=/etc/sentinel.conf
 
 # Setup firewall rules
 sudo -u root bash -c "firewall-cmd --permanent --zone=public --add-port=6379/tcp"
@@ -23,6 +19,7 @@ sudo make install
 sudo tee /usr/lib/systemd/system/redis.service > /dev/null << EOF
 [Unit]
 Description=Redis In-Memory Data Store
+After=network.target
 After=network-online.target
 Wants=network-online.target
 
@@ -39,7 +36,5 @@ RestartSec=3
 WantedBy=multi-user.target
 EOF
 
-sudo useradd redis
-sudo mkdir /var/lib/redis /var/log/redis
-sudo chown -R redis:redis /var/lib/redis /var/log/redis /usr/local/bin/redis-server /etc/redis.conf
-sudo chmod 770 /var/lib/redis /var/log/redis
+# Checks if the redis user already exists before attempting to create one
+id -u redis &>/dev/null || sudo useradd redis
