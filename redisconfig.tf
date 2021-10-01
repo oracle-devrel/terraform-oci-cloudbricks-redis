@@ -268,7 +268,7 @@ resource "null_resource" "sentinel_setup_master" {
 
     inline = [
       "chmod +x ~/sentinel_setup.sh",
-      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${var.redis_replica_count}"
+      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
     ]
   }
 }
@@ -315,7 +315,7 @@ resource "null_resource" "sentinel_setup_replicas" {
 
     inline = [
       "chmod +x ~/sentinel_setup.sh",
-      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${var.redis_replica_count}"
+      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
     ]
   }
 }

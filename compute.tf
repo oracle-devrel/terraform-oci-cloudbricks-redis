@@ -63,7 +63,7 @@ resource "oci_core_instance" "redis_replica" {
     }
   }
 
-  fault_domain = var.redis_replica_fd_list[floor(count.index / length(var.redis_replica_fd_list))]
+  fault_domain = var.redis_replica_fd_list[floor(count.index / length(var.redis_replica_fd_list)) % length(var.redis_replica_fd_list)]
 
   create_vnic_details {
     subnet_id        = local.private_subnet_ocid
