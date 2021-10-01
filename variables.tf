@@ -34,65 +34,72 @@ variable "base_compute_image_ocid" {
 }
 
 variable "redis_master_name" {
-
+  description = "The name given to the master instance"
 }
 
 variable "redis_master_shape" {
-
+  description = "The shape for the master instance to use"
 }
 
 variable "redis_master_ad" {
-
+  description = "The availability domain to provision the master instance in"
 }
 
 variable "redis_master_fd" {
-
+  description = "The fault domain to provision the master instance in"
 }
 
 variable "redis_master_is_flex_shape" {
-  type    = bool
-  default = false
+  description = "Boolean to determine if the master instance is flex or not"
+  type        = bool
+  default     = false
 }
 
 variable "redis_master_ocpus" {
-  default = ""
+  description = "The number of OCPUS for the master instance to use when flex shape is enabled"
+  default     = ""
 }
 
 variable "redis_master_memory_in_gb" {
-  default = ""
+  description = "The amount of memory in GB for the master instance to use when flex shape is enabled"
+  default     = ""
 }
 
 variable "redis_replica_name" {
-
+  description = "The name given to the replica instances"
 }
 
 variable "redis_replica_count" {
-
+  description = "The number of replica instances to provision"
+  type        = number
 }
 
 variable "redis_replica_shape" {
-
+  description = "The shape for the replica instances to use"
 }
 
 variable "redis_replica_ad_list" {
-
+  description = "The availability domains to provision the replica instances in"
 }
 
 variable "redis_replica_fd_list" {
-
+  description = "The fault domains to provision the replica instances in"
 }
 
 variable "redis_replica_is_flex_shape" {
-  type    = bool
-  default = false
+  description = "Boolean to determine if the replica instances are flex or not"
+  type        = bool
+  default     = false
 }
 
 variable "redis_replica_ocpus" {
-  default = ""
+  description = "The number of OCPUS for the replica instances to use when flex shape is enabled"
+  default     = ""
 }
 
 variable "redis_replica_memory_in_gb" {
-  default = ""
+  description = "The amount of memory in GB for the replica instances to use when flex shape is enabled"
+  default     = ""
 }
 
 variable "ssh_public_key" {
@@ -125,40 +132,35 @@ variable "compute_nsg_name" {
 }
 
 variable "instance_backup_policy_level" {
-
+  description = "The backup policy of all instances boot volumes"
 }
 
 variable "master_disk_size_in_gb" {
-
+  description = "The size of the attached disk to the master instance, stores database and log data"
 }
 
 variable "master_disk_vpus_per_gb" {
-
+  description = "The VPUS of the attached disk to the master instance"
 }
 
 variable "master_backup_policy_level" {
-
+  description = "The backup policy of the master instance ISCSI disk"
 }
 
 variable "replica_disk_size_in_gb" {
-
+  description = "The size of the attached disk to the replica instances, stores database and log data"
 }
 
 variable "replica_disk_vpus_per_gb" {
-
+  description = "The VPUS of the attached disk to the replica instances"
 }
 
 variable "replica_backup_policy_level" {
-
+  description = "The backup policy of replica instances ISCSI disks"
 }
 
 variable "redis_version" {
-
+  description = "The version of Redis used in the setup"
 }
-
-variable "redis_password" {
-
-}
-
 
 /********** Brick Variables **********/
