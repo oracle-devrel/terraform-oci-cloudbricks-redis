@@ -156,8 +156,116 @@ provider "oci" {
 ```
 ## Variable documentation
 
+## Requirements
 
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.5 |
+| <a name="requirement_oci"></a> [oci](#requirement\_oci) | >= 4.36.0 |
 
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_null"></a> [null](#provider\_null) | 3.1.0 |
+| <a name="provider_oci"></a> [oci](#provider\_oci) | 4.45.0 |
+| <a name="provider_template"></a> [template](#provider\_template) | 2.2.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [null_resource.format_disk_exec_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.format_disk_exec_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.master_install_redis_binaries](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.mount_disk_exec_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.mount_disk_exec_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.partition_disk_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.partition_disk_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.provisioning_disk_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.provisioning_disk_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.pvcreate_exec_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.pvcreate_exec_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.redis_setup_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.redis_setup_replicas](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.replica_install_redis_binaries](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.sentinel_setup_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.sentinel_setup_replicas](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.vgcreate_exec_redis_master](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [null_resource.vgcreate_exec_redis_replica](https://registry.terraform.io/providers/hashicorp/null/latest/docs/resources/resource) | resource |
+| [oci_core_instance.redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance) | resource |
+| [oci_core_instance.redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_instance) | resource |
+| [oci_core_volume.ISCSIDisk_redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume) | resource |
+| [oci_core_volume.ISCSIDisk_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume) | resource |
+| [oci_core_volume_attachment.ISCSIDiskAttachment_redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_attachment) | resource |
+| [oci_core_volume_attachment.ISCSIDiskAttachment_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_attachment) | resource |
+| [oci_core_volume_backup_policy_assignment.backup_policy_assignment_ISCSI_Disk_redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
+| [oci_core_volume_backup_policy_assignment.backup_policy_assignment_ISCSI_Disk_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
+| [oci_core_volume_backup_policy_assignment.backup_policy_assignment_redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
+| [oci_core_volume_backup_policy_assignment.backup_policy_assignment_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
+| [oci_core_network_security_groups.NSG](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_network_security_groups) | data source |
+| [oci_core_subnets.PRIVATESUBNET](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_subnets) | data source |
+| [oci_core_vcns.VCN](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_vcns) | data source |
+| [oci_core_volume_backup_policies.INSTANCEBACKUPPOLICY](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_volume_backup_policies) | data source |
+| [oci_core_volume_backup_policies.MASTERBACKUPPOLICY](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_volume_backup_policies) | data source |
+| [oci_core_volume_backup_policies.REPLICABACKUPPOLICY](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_volume_backup_policies) | data source |
+| [oci_identity_compartments.COMPARTMENTS](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/identity_compartments) | data source |
+| [oci_identity_compartments.NWCOMPARTMENTS](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/identity_compartments) | data source |
+| [template_file.install_redis_binaries_sh](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+| [template_file.redis_setup_master_sh](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+| [template_file.redis_setup_replicas_sh](https://registry.terraform.io/providers/hashicorp/template/latest/docs/data-sources/file) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_base_compute_image_ocid"></a> [base\_compute\_image\_ocid](#input\_base\_compute\_image\_ocid) | Defines the OCID for the OS image to be used on artifact creation. Extract OCID from: https://docs.cloud.oracle.com/iaas/images/ or designated custom image OCID created by packer | `any` | n/a | yes |
+| <a name="input_compute_nsg_name"></a> [compute\_nsg\_name](#input\_compute\_nsg\_name) | Name of the NSG associated to the computes | `string` | `""` | no |
+| <a name="input_fingerprint"></a> [fingerprint](#input\_fingerprint) | API Key Fingerprint for user\_ocid derived from public API Key imported in OCI User config | `any` | n/a | yes |
+| <a name="input_instance_backup_policy_level"></a> [instance\_backup\_policy\_level](#input\_instance\_backup\_policy\_level) | The backup policy of all instances boot volumes | `any` | n/a | yes |
+| <a name="input_linux_compute_instance_compartment_name"></a> [linux\_compute\_instance\_compartment\_name](#input\_linux\_compute\_instance\_compartment\_name) | Defines the compartment name where the infrastructure will be created | `any` | n/a | yes |
+| <a name="input_linux_compute_network_compartment_name"></a> [linux\_compute\_network\_compartment\_name](#input\_linux\_compute\_network\_compartment\_name) | Defines the compartment where the Network is currently located | `any` | n/a | yes |
+| <a name="input_master_backup_policy_level"></a> [master\_backup\_policy\_level](#input\_master\_backup\_policy\_level) | The backup policy of the master instance ISCSI disk | `any` | n/a | yes |
+| <a name="input_master_disk_size_in_gb"></a> [master\_disk\_size\_in\_gb](#input\_master\_disk\_size\_in\_gb) | The size of the attached disk to the master instance, stores database and log data | `any` | n/a | yes |
+| <a name="input_master_disk_vpus_per_gb"></a> [master\_disk\_vpus\_per\_gb](#input\_master\_disk\_vpus\_per\_gb) | The VPUS of the attached disk to the master instance | `any` | n/a | yes |
+| <a name="input_private_key_path"></a> [private\_key\_path](#input\_private\_key\_path) | Private Key Absolute path location where terraform is executed | `any` | n/a | yes |
+| <a name="input_private_network_subnet_name"></a> [private\_network\_subnet\_name](#input\_private\_network\_subnet\_name) | Defines the subnet display name where this resource will be created at | `any` | n/a | yes |
+| <a name="input_redis_master_ad"></a> [redis\_master\_ad](#input\_redis\_master\_ad) | The availability domain to provision the master instance in | `any` | n/a | yes |
+| <a name="input_redis_master_fd"></a> [redis\_master\_fd](#input\_redis\_master\_fd) | The fault domain to provision the master instance in | `any` | n/a | yes |
+| <a name="input_redis_master_is_flex_shape"></a> [redis\_master\_is\_flex\_shape](#input\_redis\_master\_is\_flex\_shape) | Boolean to determine if the master instance is flex or not | `bool` | `false` | no |
+| <a name="input_redis_master_memory_in_gb"></a> [redis\_master\_memory\_in\_gb](#input\_redis\_master\_memory\_in\_gb) | The amount of memory in GB for the master instance to use when flex shape is enabled | `string` | `""` | no |
+| <a name="input_redis_master_name"></a> [redis\_master\_name](#input\_redis\_master\_name) | The name given to the master instance | `any` | n/a | yes |
+| <a name="input_redis_master_ocpus"></a> [redis\_master\_ocpus](#input\_redis\_master\_ocpus) | The number of OCPUS for the master instance to use when flex shape is enabled | `string` | `""` | no |
+| <a name="input_redis_master_shape"></a> [redis\_master\_shape](#input\_redis\_master\_shape) | The shape for the master instance to use | `any` | n/a | yes |
+| <a name="input_redis_replica_ad_list"></a> [redis\_replica\_ad\_list](#input\_redis\_replica\_ad\_list) | The availability domains to provision the replica instances in | `any` | n/a | yes |
+| <a name="input_redis_replica_count"></a> [redis\_replica\_count](#input\_redis\_replica\_count) | The number of replica instances to provision | `number` | n/a | yes |
+| <a name="input_redis_replica_fd_list"></a> [redis\_replica\_fd\_list](#input\_redis\_replica\_fd\_list) | The fault domains to provision the replica instances in | `any` | n/a | yes |
+| <a name="input_redis_replica_is_flex_shape"></a> [redis\_replica\_is\_flex\_shape](#input\_redis\_replica\_is\_flex\_shape) | Boolean to determine if the replica instances are flex or not | `bool` | `false` | no |
+| <a name="input_redis_replica_memory_in_gb"></a> [redis\_replica\_memory\_in\_gb](#input\_redis\_replica\_memory\_in\_gb) | The amount of memory in GB for the replica instances to use when flex shape is enabled | `string` | `""` | no |
+| <a name="input_redis_replica_name"></a> [redis\_replica\_name](#input\_redis\_replica\_name) | The name given to the replica instances | `any` | n/a | yes |
+| <a name="input_redis_replica_ocpus"></a> [redis\_replica\_ocpus](#input\_redis\_replica\_ocpus) | The number of OCPUS for the replica instances to use when flex shape is enabled | `string` | `""` | no |
+| <a name="input_redis_replica_shape"></a> [redis\_replica\_shape](#input\_redis\_replica\_shape) | The shape for the replica instances to use | `any` | n/a | yes |
+| <a name="input_redis_version"></a> [redis\_version](#input\_redis\_version) | The version of Redis used in the setup | `any` | n/a | yes |
+| <a name="input_region"></a> [region](#input\_region) | Target region where artifacts are going to be created | `any` | n/a | yes |
+| <a name="input_replica_backup_policy_level"></a> [replica\_backup\_policy\_level](#input\_replica\_backup\_policy\_level) | The backup policy of replica instances ISCSI disks | `any` | n/a | yes |
+| <a name="input_replica_disk_size_in_gb"></a> [replica\_disk\_size\_in\_gb](#input\_replica\_disk\_size\_in\_gb) | The size of the attached disk to the replica instances, stores database and log data | `any` | n/a | yes |
+| <a name="input_replica_disk_vpus_per_gb"></a> [replica\_disk\_vpus\_per\_gb](#input\_replica\_disk\_vpus\_per\_gb) | The VPUS of the attached disk to the replica instances | `any` | n/a | yes |
+| <a name="input_ssh_private_key"></a> [ssh\_private\_key](#input\_ssh\_private\_key) | Defines SSH Private Key to be used in order to remotely connect to compute instances | `any` | n/a | yes |
+| <a name="input_ssh_public_key"></a> [ssh\_public\_key](#input\_ssh\_public\_key) | Defines SSH Public Key to be used in order to remotely connect to compute instances | `any` | n/a | yes |
+| <a name="input_tenancy_ocid"></a> [tenancy\_ocid](#input\_tenancy\_ocid) | OCID of tenancy | `any` | n/a | yes |
+| <a name="input_user_ocid"></a> [user\_ocid](#input\_user\_ocid) | User OCID in tenancy. Currently hardcoded to user denny.alquinta@oracle.com | `any` | n/a | yes |
+| <a name="input_vcn_display_name"></a> [vcn\_display\_name](#input\_vcn\_display\_name) | VCN Display name to execute lookup | `any` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_redis_master_server"></a> [redis\_master\_server](#output\_redis\_master\_server) | Redis Master Instance |
+| <a name="output_redis_replica_servers"></a> [redis\_replica\_servers](#output\_redis\_replica\_servers) | Redis Replica Instances |
 
 ## Contributing
 This project is open source.  Please submit your contributions by forking this repository and submitting a pull request!  Oracle appreciates any contributions that are made by the open source community.
