@@ -33,7 +33,7 @@ resource "oci_core_instance" "redis_master" {
 
   source_details {
     source_type = "image"
-    source_id   = var.base_compute_image_ocid
+    source_id   = local.base_compute_image_ocid
   }
 
   connection {
@@ -75,7 +75,7 @@ resource "oci_core_instance" "redis_replica" {
 
   source_details {
     source_type = "image"
-    source_id   = var.base_compute_image_ocid
+    source_id   = local.base_compute_image_ocid
   }
 
   connection {

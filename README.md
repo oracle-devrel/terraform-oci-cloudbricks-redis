@@ -5,6 +5,8 @@
 ## Introduction
 The following brick contains the logic to provision a Redis database caluster in a highly available architecture. This is compromised of a master server and any number of replicas.
 
+This brick is only supported on Oracle Linux for the time being.
+
 ## Reference Architecture
 The following is the reference architecture associated to this brick
 
@@ -34,8 +36,6 @@ linux_compute_instance_compartment_name = "MY_ARTIFACT_COMPARTMENT"
 linux_compute_network_compartment_name  = "MY_NETWORK_COMPARTMENT"
 private_network_subnet_name             = "MY_PRIVATE_SUBNET"
 vcn_display_name                        = "MY_VCN"
-
-base_compute_image_ocid = "ocid1.image.oc1.uk-london-1.aaaaaaaabcedfghijklmonoprstuvwxyz" 
 
 redis_master_name  = "MY_REDIS_MASTER_NAME"
 redis_master_shape = "VM.Standard2.1"
@@ -81,8 +81,6 @@ linux_compute_network_compartment_name  = "MY_NETWORK_COMPARTMENT"
 private_network_subnet_name             = "MY_PRIVATE_SUBNET"
 vcn_display_name                        = "MY_VCN"
 
-base_compute_image_ocid = "ocid1.image.oc1.uk-london-1.aaaaaaaabcedfghijklmonoprstuvwxyz" 
-
 redis_master_name          = "MY_REDIS_MASTER_NAME"
 redis_master_shape         = "VM.Standard.E4.Flex"
 redis_master_ad            = "aBCD:RE-REGION-1-AD-1"
@@ -118,7 +116,6 @@ replica_backup_policy_level = "bronze"
 - Compute ssh keys to later log into instances. Paths to the keys should be provided in variables `ssh_public_key` and `ssh_private_key`.
 - Variable `compute_nsg_name` is an optional network security group that can be attached.
 - Variable `redis_version` may be set to any of the supported version of Redis at the time of creating this brick `(6.2.5, 6.0.15, 5.0.13)` Source: [Redis endoflife](https://endoflife.date/redis)
-- Variable `base_compute_image_ocid` should be the latest OCID of Oracle Autonomous Linux for your region, found at [Oracle Cloud Infrastructure Documentation / Images](https://docs.cloud.oracle.com/iaas/images/)
 - Variable `redis_replica_count` determines how many replica instance are provisioned. This value has been tested between `1-30`, however a minimum of `3` is recommended.
 - Variable `instance_backup_policy_level` specifies the name of the backup policy used on the instance boot volumes.
 - Variables `master_backup_policy_level` and `replica_backup_policy_level` specificy the name of the backup policy used on the ISCSI disks storing data and log files on the master and replica servers respectively.
@@ -207,6 +204,7 @@ No modules.
 | [oci_core_volume_backup_policy_assignment.backup_policy_assignment_ISCSI_Disk_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
 | [oci_core_volume_backup_policy_assignment.backup_policy_assignment_redis_master](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
 | [oci_core_volume_backup_policy_assignment.backup_policy_assignment_redis_replica](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/resources/core_volume_backup_policy_assignment) | resource |
+| [oci_core_images.ORACLELINUX](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_images) | data source |
 | [oci_core_network_security_groups.NSG](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_network_security_groups) | data source |
 | [oci_core_subnets.PRIVATESUBNET](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_subnets) | data source |
 | [oci_core_vcns.VCN](https://registry.terraform.io/providers/hashicorp/oci/latest/docs/data-sources/core_vcns) | data source |
@@ -223,7 +221,6 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_base_compute_image_ocid"></a> [base\_compute\_image\_ocid](#input\_base\_compute\_image\_ocid) | Defines the OCID for the OS image to be used on artifact creation. Extract OCID from: https://docs.cloud.oracle.com/iaas/images/ or designated custom image OCID created by packer | `any` | n/a | yes |
 | <a name="input_compute_nsg_name"></a> [compute\_nsg\_name](#input\_compute\_nsg\_name) | Name of the NSG associated to the computes | `string` | `""` | no |
 | <a name="input_fingerprint"></a> [fingerprint](#input\_fingerprint) | API Key Fingerprint for user\_ocid derived from public API Key imported in OCI User config | `any` | n/a | yes |
 | <a name="input_instance_backup_policy_level"></a> [instance\_backup\_policy\_level](#input\_instance\_backup\_policy\_level) | The backup policy of all instances boot volumes | `any` | n/a | yes |
