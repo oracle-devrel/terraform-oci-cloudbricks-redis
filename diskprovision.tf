@@ -44,7 +44,7 @@ resource "null_resource" "partition_disk_redis_master" {
     inline = [
       "set +x",
       "export DEVICE_ID=/dev/disk/by-path/ip-${oci_core_volume_attachment.ISCSIDiskAttachment_redis_master.ipv4}:${oci_core_volume_attachment.ISCSIDiskAttachment_redis_master.port}-iscsi-${oci_core_volume_attachment.ISCSIDiskAttachment_redis_master.iqn}-lun-1",
-      "${local.fdisk} $${DEVICE_ID}",
+      "if [ ${var.master_disk_size_in_gb} > 2000 ]; then ${local.parted} $${DEVICE_ID} mklabel gpt mkpart P1 xfs 0% 100%; else ${local.fdisk} $${DEVICE_ID}; fi",
     ]
   }
 }
@@ -188,7 +188,7 @@ resource "null_resource" "partition_disk_redis_replica" {
     inline = [
       "set +x",
       "export DEVICE_ID=/dev/disk/by-path/ip-${oci_core_volume_attachment.ISCSIDiskAttachment_redis_replica[count.index].ipv4}:${oci_core_volume_attachment.ISCSIDiskAttachment_redis_replica[count.index].port}-iscsi-${oci_core_volume_attachment.ISCSIDiskAttachment_redis_replica[count.index].iqn}-lun-1",
-      "${local.fdisk} $${DEVICE_ID}",
+      "if [ ${var.replica_disk_size_in_gb} > 2000 ]; then ${local.parted} $${DEVICE_ID} mklabel gpt mkpart P1 xfs 0% 100%; else ${local.fdisk} $${DEVICE_ID}; fi",
     ]
   }
 }
