@@ -5,7 +5,7 @@
 # Purpose: The following script remotely executes all the setup scripts on the Redis compute instances
 
 data "template_file" "install_redis_binaries_sh" {
-  template = file("scripts/install_redis_binaries.sh")
+  template = file("${path.module}/install_redis_binaries.sh")
 
   vars = {
     redis_version = var.redis_version
@@ -14,7 +14,7 @@ data "template_file" "install_redis_binaries_sh" {
 
 data "template_file" "redis_setup_master_sh" {
   depends_on = [oci_core_instance.redis_master]
-  template   = file("scripts/redis_setup_master.sh")
+  template   = file("${path.module}/redis_setup_master.sh")
 
   vars = {
     redis_master_ip = oci_core_instance.redis_master.private_ip
@@ -24,7 +24,7 @@ data "template_file" "redis_setup_master_sh" {
 data "template_file" "redis_setup_replicas_sh" {
   depends_on = [oci_core_instance.redis_replica]
   count      = var.redis_replica_count
-  template   = file("scripts/redis_setup_replicas.sh")
+  template   = file("${path.module}/redis_setup_replicas.sh")
 
   vars = {
     redis_master_ip  = oci_core_instance.redis_master.private_ip
@@ -254,7 +254,7 @@ resource "null_resource" "sentinel_setup_master" {
       private_key = file(var.ssh_private_key)
     }
 
-    source      = "scripts/sentinel_setup.sh"
+    source      = "${path.module}/sentinel_setup.sh"
     destination = "~/sentinel_setup.sh"
   }
 
@@ -301,7 +301,7 @@ resource "null_resource" "sentinel_setup_replicas" {
       private_key = file(var.ssh_private_key)
     }
 
-    source      = "scripts/sentinel_setup.sh"
+    source      = "${path.module}/sentinel_setup.sh"
     destination = "~/sentinel_setup.sh"
   }
 
