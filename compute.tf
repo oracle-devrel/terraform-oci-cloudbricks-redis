@@ -21,6 +21,13 @@ resource "oci_core_instance" "redis_master" {
     }
   }
 
+  agent_config {
+    plugins_config {
+      desired_state = "ENABLED"
+      name = "Bastion"
+    }
+  }
+
   fault_domain = var.redis_master_fd
 
   create_vnic_details {
@@ -60,6 +67,13 @@ resource "oci_core_instance" "redis_replica" {
     content {
       ocpus         = var.redis_replica_ocpus
       memory_in_gbs = var.redis_replica_memory_in_gb
+    }
+  }
+
+  agent_config {
+    plugins_config {
+      desired_state = "ENABLED"
+      name = "Bastion"
     }
   }
 
