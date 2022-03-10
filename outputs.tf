@@ -6,12 +6,10 @@
 
 output "redis_master_server" {
   description = "Redis Master Instance"
-  sensitive   = true
   value = oci_core_instance.redis_master
 }
 
 output "redis_replica_servers" {
   description = "Redis Replica Instances"
-  sensitive   = true
   value = oci_core_instance.redis_replica[*]
 }
