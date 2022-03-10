@@ -115,7 +115,7 @@ replica_backup_policy_level = "bronze"
 ### Variable Specific Conisderions
 - Compute ssh keys to later log into instances. Paths to the keys should be provided in variables `ssh_public_key` and `ssh_private_key`.
 - Variable `compute_nsg_name` is an optional network security group that can be attached.
-- Variable `redis_version` may be set to any of the supported version of Redis at the time of creating this brick `(6.2.5, 6.0.15, 5.0.13)` Source: [Redis endoflife](https://endoflife.date/redis)
+- Variable `redis_version` may be set to any of the supported version of Redis at the time of creating this brick `(6.2.6, 6.0.16, 5.0.14)` Source: [Redis endoflife](https://endoflife.date/redis)
 - Variable `redis_replica_count` determines how many replica instance are provisioned. This value has been tested between `1-30`, however a minimum of `3` is recommended.
 - Variable `instance_backup_policy_level` specifies the name of the backup policy used on the instance boot volumes.
 - Variables `master_backup_policy_level` and `replica_backup_policy_level` specificy the name of the backup policy used on the ISCSI disks storing data and log files on the master and replica servers respectively.

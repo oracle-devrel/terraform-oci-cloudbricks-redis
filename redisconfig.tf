@@ -51,7 +51,7 @@ resource "null_resource" "master_install_redis_binaries" {
     }
 
     inline = [
-      "sudo rm -rf ~/install_redis_binaries.sh"
+      "sudo rm -rf /tmp/install_redis_binaries.sh"
     ]
   }
 
@@ -64,7 +64,7 @@ resource "null_resource" "master_install_redis_binaries" {
     }
 
     content     = data.template_file.install_redis_binaries_sh.rendered
-    destination = "~/install_redis_binaries.sh"
+    destination = "/tmp/install_redis_binaries.sh"
   }
 
   provisioner "remote-exec" {
@@ -76,8 +76,8 @@ resource "null_resource" "master_install_redis_binaries" {
     }
 
     inline = [
-      "chmod +x ~/install_redis_binaries.sh",
-      "sudo ~/install_redis_binaries.sh"
+      "chmod +x /tmp/install_redis_binaries.sh",
+      "sudo /tmp/install_redis_binaries.sh"
     ]
   }
 }
@@ -103,7 +103,7 @@ resource "null_resource" "replica_install_redis_binaries" {
     }
 
     inline = [
-      "sudo rm -rf ~/install_redis_binaries.sh"
+      "sudo rm -rf /tmp/install_redis_binaries.sh"
     ]
   }
 
@@ -116,7 +116,7 @@ resource "null_resource" "replica_install_redis_binaries" {
     }
 
     content     = data.template_file.install_redis_binaries_sh.rendered
-    destination = "~/install_redis_binaries.sh"
+    destination = "/tmp/install_redis_binaries.sh"
   }
 
   provisioner "remote-exec" {
@@ -128,8 +128,8 @@ resource "null_resource" "replica_install_redis_binaries" {
     }
 
     inline = [
-      "chmod +x ~/install_redis_binaries.sh",
-      "sudo ~/install_redis_binaries.sh"
+      "chmod +x /tmp/install_redis_binaries.sh",
+      "sudo /tmp/install_redis_binaries.sh"
     ]
   }
 }
@@ -149,7 +149,7 @@ resource "null_resource" "redis_setup_master" {
     }
 
     inline = [
-      "sudo rm -rf ~/redis_setup_master.sh"
+      "sudo rm -rf /tmp/redis_setup_master.sh"
     ]
   }
 
@@ -162,7 +162,7 @@ resource "null_resource" "redis_setup_master" {
     }
 
     content     = data.template_file.redis_setup_master_sh.rendered
-    destination = "~/redis_setup_master.sh"
+    destination = "/tmp/redis_setup_master.sh"
   }
 
   provisioner "remote-exec" {
@@ -174,8 +174,8 @@ resource "null_resource" "redis_setup_master" {
     }
 
     inline = [
-      "chmod +x ~/redis_setup_master.sh",
-      "sudo ~/redis_setup_master.sh"
+      "chmod +x /tmp/redis_setup_master.sh",
+      "sudo /tmp/redis_setup_master.sh"
     ]
   }
 }
@@ -196,7 +196,7 @@ resource "null_resource" "redis_setup_replicas" {
     }
 
     inline = [
-      "sudo rm -rf ~/redis_setup_replicas.sh"
+      "sudo rm -rf /tmp/redis_setup_replicas.sh"
     ]
   }
 
@@ -209,7 +209,7 @@ resource "null_resource" "redis_setup_replicas" {
     }
 
     content     = data.template_file.redis_setup_replicas_sh[count.index].rendered
-    destination = "~/redis_setup_replicas.sh"
+    destination = "/tmp/redis_setup_replicas.sh"
   }
 
   provisioner "remote-exec" {
@@ -221,8 +221,8 @@ resource "null_resource" "redis_setup_replicas" {
     }
 
     inline = [
-      "chmod +x ~/redis_setup_replicas.sh",
-      "sudo ~/redis_setup_replicas.sh"
+      "chmod +x /tmp/redis_setup_replicas.sh",
+      "sudo /tmp/redis_setup_replicas.sh"
     ]
   }
 }
@@ -242,7 +242,7 @@ resource "null_resource" "sentinel_setup_master" {
     }
 
     inline = [
-      "sudo rm -rf ~/sentinel_setup.sh"
+      "sudo rm -rf /tmp/sentinel_setup.sh"
     ]
   }
 
@@ -255,7 +255,7 @@ resource "null_resource" "sentinel_setup_master" {
     }
 
     source      = "${path.module}/scripts/sentinel_setup.sh"
-    destination = "~/sentinel_setup.sh"
+    destination = "/tmp/sentinel_setup.sh"
   }
 
   provisioner "remote-exec" {
@@ -267,8 +267,8 @@ resource "null_resource" "sentinel_setup_master" {
     }
 
     inline = [
-      "chmod +x ~/sentinel_setup.sh",
-      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
+      "chmod +x /tmp/sentinel_setup.sh",
+      "sudo /tmp/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
     ]
   }
 }
@@ -289,7 +289,7 @@ resource "null_resource" "sentinel_setup_replicas" {
     }
 
     inline = [
-      "sudo rm -rf ~/sentinel_setup.sh"
+      "sudo rm -rf /tmp/sentinel_setup.sh"
     ]
   }
 
@@ -302,7 +302,7 @@ resource "null_resource" "sentinel_setup_replicas" {
     }
 
     source      = "${path.module}/scripts/sentinel_setup.sh"
-    destination = "~/sentinel_setup.sh"
+    destination = "/tmp/sentinel_setup.sh"
   }
 
   provisioner "remote-exec" {
@@ -314,8 +314,8 @@ resource "null_resource" "sentinel_setup_replicas" {
     }
 
     inline = [
-      "chmod +x ~/sentinel_setup.sh",
-      "sudo ~/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
+      "chmod +x /tmp/sentinel_setup.sh",
+      "sudo /tmp/sentinel_setup.sh ${oci_core_instance.redis_master.private_ip} ${tonumber(var.redis_replica_count)}"
     ]
   }
 }
