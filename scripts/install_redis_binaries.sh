@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # Setup firewall rules
-sudo -u root bash -c "firewall-cmd --permanent --zone=public --add-port=6379/tcp"
-sudo -u root bash -c "firewall-cmd --permanent --zone=public --add-port=26379/tcp"
-sudo -u root bash -c "firewall-cmd --reload"
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+sudo systemctl mask --now firewalld
 
 # Install wget and gcc
 sudo -u root bash -c "yum install -y wget gcc"
